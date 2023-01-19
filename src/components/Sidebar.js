@@ -12,6 +12,8 @@ const Sidebar = () => {
         height={100}
         src="/assets/img/logo.svg"
         alt="Imagen Logo"
+        priority
+        className="p-10 mx-auto"
       />
 
       <nav className="mt-10">
