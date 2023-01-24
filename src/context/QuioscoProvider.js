@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import { formatearFecha } from "../helpers/index";
 
 const QuioscoContext = createContext();
 
@@ -16,7 +17,7 @@ const QuioscoProvider = ({ children }) => {
 
   const router = useRouter();
 
-  //Obtener Categorias
+  //Obtener Categoriasa
   const obtenerCategorias = async () => {
     try {
       const { data } = await axios("/api/categorias");
@@ -81,10 +82,32 @@ const QuioscoProvider = ({ children }) => {
     setPedido(pedidoActualizado);
   };
 
-  //Colacar la Orden
+  //Colacar la Orden, ENVIANDO DATOS AL SERVIDOR "POST"
   const colocarOrden = async (e) => {
     e.preventDefault();
-    console.log("Enviando");
+
+    try {
+      const { data } = await axios.post("/api/ordenes", {
+        nombre,
+        fecha: Date.now().toString(),
+        total,
+        pedido,
+      });
+      //console.log(data);
+
+      //Restear la App
+      setCategoriaActual([0]);
+      setPedido([]);
+      setNombre("");
+      setTotal(0);
+
+      toast.success("Pedido Realizado Correctamente");
+      setTimeout(() => {
+        router.push(`/`);
+      }, 2500);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //Calculando el Total

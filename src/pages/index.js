@@ -1,5 +1,3 @@
-import Head from "next/head";
-import Image from "next/image";
 import Layout from "@/layout/Layout";
 import Producto from "@/components/Producto";
 import useQuiosco from "@/hooks/useQuiosco";
